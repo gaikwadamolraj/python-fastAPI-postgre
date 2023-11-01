@@ -1,0 +1,18 @@
+services:
+  api:
+    build: ./api
+    container_name: metadata
+    ports:
+      - 8000:8000
+    environment:
+      - DATABASE_URL=postgresql://myuser:secret@postgres/metadatadb
+    depends_on: [postgres]
+  postgres:
+    image: "postgres:latest"
+    container_name: metadataDB
+    environment:
+      - "POSTGRES_DB=metadatadb"
+      - "POSTGRES_PASSWORD=secret"
+      - "POSTGRES_USER=myuser"
+    ports:
+      - 5432:5432
