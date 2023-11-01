@@ -1,3 +1,4 @@
+# import uvicorn
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from routes.metadataRequests import router
@@ -21,3 +22,5 @@ app.include_router(router=router, prefix="/api/v1/metadata")
 async  def health():
     return HealthResponse(status="OK")
 
+# if __name__ == "__main__":
+#     uvicorn.run(app, host="0.0.0.0", port=8000)

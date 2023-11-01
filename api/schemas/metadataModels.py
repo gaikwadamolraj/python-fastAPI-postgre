@@ -18,6 +18,7 @@ class HealthResponse(BaseModel):
 #     created_on: str
 #     updated_on: str
 
+
 class MetadataRequest(BaseModel):
     # id: Optional[UUID]
     client_name: str
@@ -25,7 +26,8 @@ class MetadataRequest(BaseModel):
     file_content: str
 
     class Config:
-        from_attributes = True
+        orm_mode = True
+
 
 class MetadataResponse(BaseModel):
     id: Optional[UUID]
@@ -39,4 +41,4 @@ class MetadataResponse(BaseModel):
     updated_on: datetime
 
     class Config:
-        from_attributes = True
+        orm_mode = True

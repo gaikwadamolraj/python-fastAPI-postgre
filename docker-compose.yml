@@ -1,18 +1,25 @@
+version: "3"
 services:
+  db:
+    image: "postgres:14.1-alpine"
+#    container_name: db
+    environment:
+      - POSTGRES_DB=metastore
+      - POSTGRES_PASSWORD=secret
+      - POSTGRES_USER=myuser
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
   api:
-    build: ./api
-    container_name: metadata
+    build:
+      context: ./api
+#    container_name: api
     ports:
-      - 8000:8000
+      - "5000:5000"
     environment:
-      - DATABASE_URL=postgresql://myuser:secret@postgres/metadatadb
-    depends_on: [postgres]
-  postgres:
-    image: "postgres:latest"
-    container_name: metadataDB
-    environment:
-      - "POSTGRES_DB=metadatadb"
-      - "POSTGRES_PASSWORD=secret"
-      - "POSTGRES_USER=myuser"
-    ports:
-      - 5432:5432
+      - DATABASE_URL=postgresql://myuser:secret@db:5432/metastore
+    depends_on:
+      - db
+volumes:
+  postgres_data:

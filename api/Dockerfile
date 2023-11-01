@@ -6,8 +6,11 @@ COPY requirements.txt /app/requirements.txt
 
 RUN pip install --no-cache-dir --upgrade -r /app/requirements.txt
 
-COPY . /app/
+COPY . /app
 
-EXPOSE 8000
+EXPOSE 5000
+#ENV DATABASE_URL="postgresql://myuser:secret@postgres/metadatadb"
 
-CMD [ "bash", "-c", "uvicorn main:app --reload" ]
+CMD [ "bash", "-c", "uvicorn main:app --host 0.0.0.0 --port 5000" ]
+
+#CMD ["python", "/app/api/main.py"]
