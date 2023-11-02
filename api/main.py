@@ -1,5 +1,5 @@
 # import uvicorn
-from fastapi import FastAPI
+from fastapi import FastAPI, status
 from fastapi.middleware.cors import CORSMiddleware
 from routes.metadataRequests import router
 from schemas.metadataModels import HealthResponse
@@ -18,7 +18,7 @@ app.add_middleware(
 
 app.include_router(router=router, prefix="/api/v1/metadata")
 
-@app.get("/", response_model=HealthResponse)
+@app.get("/", status_code=status.HTTP_200_OK, response_model=HealthResponse)
 async  def health():
     return HealthResponse(status="OK")
 
